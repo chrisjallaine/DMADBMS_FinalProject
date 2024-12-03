@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>is DS the Recipe?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease;
+        }
+        header {
+            background-color: #a8d8a8;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-size: 28px;
+            font-weight: 500;
+            animation: floatHeader 3s ease-in-out infinite;
+            transition: background-color 0.3s ease;
+        }
+        @keyframes floatHeader {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+        header img {
+            height: 120px;
+            width: auto;
+            transition: opacity 0.3s ease;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .recipe-card {
+            background-color: #e0f2f1;
+            margin: 10px;
+            padding: 20px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .recipe-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            transform: scale(1.05) rotateY(10deg);
+            border: 2px solid #4CAF50;
+        }
+        .recipe-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        /* Light Mode Recipe Title */
+        .recipe-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #006400; /* Dark Green */
+        }
+        /* Dark Mode Recipe Title */
+        body.dark-mode .recipe-title {
+            color: #80e27e; /* Pastel Green */
+        }
+        .recipe-details {
+            font-size: 14px;
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+        .recipe-distance {
+            font-size: 14px;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .search-box {
+            text-align: center;
+            margin: 20px;
+        }
+        .search-box input[type="text"] {
+            padding: 12px;
+            width: 300px;
+            border-radius: 30px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background-color: #fff;
+        }
+        .search-box input[type="text"]:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+        }
+        .search-box button {
+            padding: 12px 25px;
+            margin-left: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            cursor: pointer;
+        }
+        .search-box button:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+        .search-box button.clicked {
+            background-color: #fff176;
+        }
+        .recipe-card .recipe-details strong {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .highlight {
+            background-color: #ffeb3b;
+            font-weight: bold;
+            padding: 0 4px;
+            border-radius: 3px;
+        }
+        /* Dark mode styling */
+        body.dark-mode {
+            background-color: #121212;
+            color: #f4f4f4;
+        }
+        body.dark-mode header {
+            background-color: #333;
+        }
+        body.dark-mode .recipe-card {
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+        }
+        body.dark-mode .search-box input[type="text"] {
+            background-color: #444;
+            color: white;
+            border-color: #555;
+        }
+        body.dark-mode .search-box input[type="text"]:focus {
+            border-color: #777;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+        }
+        body.dark-mode .search-box button {
+            background-color: #666;
+        }
+        body.dark-mode .search-box button.clicked {
+            background-color: #fff176;
+        }
+        body.dark-mode .search-box button:hover {
+            background-color: #555;
+        }
+        #dark-mode-toggle {
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: #76c7c0; /* Light green toggle */
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        #dark-mode-toggle:hover {
+            background-color: #4db6ac;
+            transform: scale(1.1);
+        }
+        /* Logo change in dark mode */
+        header img.dark-mode-logo {
+            display: none;
+        }
+        body.dark-mode header img.dark-mode-logo {
+            display: block;
+        }
+        body.dark-mode header img.light-mode-logo {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>is DS the Recipe?</h1>
+        <!-- Light mode logo -->
+        <img class="light-mode-logo" src="https://i.ibb.co/XDG5ST7/IS-DS-THE-RECIPE.png" alt="IS DS The Recipe Logo">
+        <!-- Dark mode logo -->
+        <img class="dark-mode-logo" src="https://i.ibb.co/HH3r1Pb/IS-DS-THE-RECIPE-2.png" alt="IS DS The Recipe Logo">
+    </header>
+
+    <div class="search-box">
+        <form method="POST">
+            <input type="text" name="ingredients" placeholder="Enter ingredients separated by commas" value="{{ user_input }}" required>
+            <button type="submit" id="find-recipes-btn">Find Recipes</button>
+        </form>
+        <button id="dark-mode-toggle">🌙 Toggle Dark Mode</button>
+    </div>
+
+    <div class="container">
+        {% if recipes %}
+            <h2>Recommended Recipes:</h2>
+            {% for recipe in recipes %}
+                <div class="recipe-card">
+                    <img src="{{ recipe['image'] }}" alt="Recipe Image">
+                    <div class="recipe-title">{{ recipe['title'] }}</div>
+                    <div class="recipe-details">
+                        <div><strong>Ingredients:</strong> {{ recipe['ingredients'] }}</div>
+                        <div><strong>Dietary Info:</strong> {{ recipe['dietary_info'] }}</div>
+                        <div><strong>Ingredient Level:</strong> {{ recipe['ingredient_level'] }}</div>
+                        <div><strong>Dietary Info Level:</strong> {{ recipe['dietary_info_level'] }}</div>
+                    </div>
+                    <div class="recipe-distance">
+                        Distance: {{ recipe['distance'] }}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No recipes found. Try entering some ingredients!</p>
+        {% endif %}
+    </div>
+
+    <script>
+        // Button color change on click
+        document.getElementById("find-recipes-btn").addEventListener("click", function () {
+            this.classList.toggle("clicked");
+        });
+
+        // Toggle Dark Mode
+        document.getElementById("dark-mode-toggle").addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
+
+</body>
+</html>
