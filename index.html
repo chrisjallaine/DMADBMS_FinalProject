@@ -6,240 +6,287 @@
     <title>is DS the Recipe?</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
+        .web-frame {
+            width: 90%;
+            max-width: 1200px;
+            height: 90vh;
+            background-image: url('https://i.ibb.co/J26xDk2/Green-and-Beige-Illustrative-Healthy-Food-Presentation-1.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 10px solid #ccc;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Dark mode */
+        body.dark-mode .web-frame {
+            background-image: none; /* Remove background image */
+            background-color: #333; /* Set background color to black */
+        }
+
         header {
-            background-color: #a8d8a8;
+            background-color: rgba(168, 216, 168, 0.9);
             color: white;
             padding: 20px;
             text-align: center;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 10px;
             font-size: 28px;
             font-weight: 500;
-            animation: floatHeader 3s ease-in-out infinite;
-            transition: background-color 0.3s ease;
         }
-        @keyframes floatHeader {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
+
+        /* Dark mode header */
+        body.dark-mode header {
+            background-color: rgba(51, 51, 51, 0.9);
         }
+
         header img {
-            height: 120px;
-            width: auto;
-            transition: opacity 0.3s ease;
+            height: 120px; /* Increased from 80px */
         }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px;
+
+        /* Hide light mode logo in dark mode */
+        body.dark-mode .light-mode-logo {
+            display: none;
         }
-        .recipe-card {
-            background-color: #e0f2f1;
-            margin: 10px;
-            padding: 20px;
-            width: 250px;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: left;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+
+        /* Hide dark mode logo in light mode */
+        body.light-mode .dark-mode-logo {
+            display: none;
         }
-        .recipe-card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            transform: scale(1.05) rotateY(10deg);
-            border: 2px solid #4CAF50;
+
+        /* Show light mode logo in light mode */
+        body.light-mode .light-mode-logo {
+            display: block;
         }
-        .recipe-card img {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
+
+        /* Show dark mode logo in dark mode */
+        body.dark-mode .dark-mode-logo {
+            display: block;
         }
-        /* Light Mode Recipe Title */
-        .recipe-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
-            color: #006400; /* Dark Green */
-        }
-        /* Dark Mode Recipe Title */
-        body.dark-mode .recipe-title {
-            color: #80e27e; /* Pastel Green */
-        }
-        .recipe-details {
-            font-size: 14px;
-            margin: 5px 0;
-            line-height: 1.5;
-        }
-        .recipe-distance {
-            font-size: 14px;
-            color: #4CAF50;
-            font-weight: bold;
-        }
+
         .search-box {
+            margin: 20px 0;
             text-align: center;
-            margin: 20px;
         }
+
         .search-box input[type="text"] {
             padding: 12px;
-            width: 300px;
+            width: 250px;
             border-radius: 30px;
             border: 1px solid #ddd;
-            font-size: 16px;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background-color: #fff;
+            font-size: 14px;
         }
-        .search-box input[type="text"]:focus {
-            border-color: #4CAF50;
-            box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
-        }
+
         .search-box button {
-            padding: 12px 25px;
+            padding: 10px 20px;
             margin-left: 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 25px;
             font-weight: bold;
-            font-size: 16px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-            cursor: pointer;
+            font-size: 14px;
         }
-        .search-box button:hover {
-            background-color: #45a049;
-            transform: scale(1.1);
-        }
-        .search-box button.clicked {
-            background-color: #fff176;
-        }
-        .recipe-card .recipe-details strong {
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .highlight {
-            background-color: #ffeb3b;
-            font-weight: bold;
-            padding: 0 4px;
-            border-radius: 3px;
-        }
-        /* Dark mode styling */
-        body.dark-mode {
-            background-color: #121212;
-            color: #f4f4f4;
-        }
-        body.dark-mode header {
-            background-color: #333;
-        }
-        body.dark-mode .recipe-card {
-            background-color: #2a2a2a;
-            border: 1px solid #444;
-        }
-        body.dark-mode .search-box input[type="text"] {
-            background-color: #444;
-            color: white;
-            border-color: #555;
-        }
-        body.dark-mode .search-box input[type="text"]:focus {
-            border-color: #777;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-        }
-        body.dark-mode .search-box button {
-            background-color: #666;
-        }
-        body.dark-mode .search-box button.clicked {
-            background-color: #fff176;
-        }
-        body.dark-mode .search-box button:hover {
-            background-color: #555;
-        }
+
         #dark-mode-toggle {
-            margin-top: 20px;
-            padding: 12px 25px;
-            background-color: #76c7c0; /* Light green toggle */
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #76c7c0;
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 20px;
+        }
+
+        .container {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.95); /* White with transparency */
+            border-radius: 15px;
+            padding: 15px;
+            margin: 0 20px 20px;
+            overflow-y: auto;
+        }
+
+        /* Dark mode container */
+        body.dark-mode .container {
+            background-color: #222; /* Dark background for container */
+        }
+
+        /* Flexbox container for recipe cards */
+        .recipe-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+
+        .recipe-card {
+            background-color: rgba(224, 242, 241, 0.9);
+            margin: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 250px;
+            width: 100%;
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .recipe-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .recipe-card .recipe-title {
+            font-size: 16px;
             font-weight: bold;
+            color: #4CAF50; /* Highlighted title color */
+        }
+
+        .recipe-card .recipe-distance {
             font-size: 14px;
-            transition: transform 0.3s ease, background-color 0.3s ease;
+            color: #333;
+            margin-top: 6px; /* Adjusted distance from title */
         }
-        #dark-mode-toggle:hover {
-            background-color: #4db6ac;
-            transform: scale(1.1);
+
+        .recipe-card .recipe-cuisine {
+            font-size: 14px;
+            margin-top: 8px;
+            color: #555;
         }
-        /* Logo change in dark mode */
-        header img.dark-mode-logo {
+
+        .recipe-card .recipe-details {
+            font-size: 14px;
+            margin-top: 12px;
+            display: none; /* Hide by default */
+            text-align: left; /* Ensure left alignment for details */
+        }
+
+        .recipe-card:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .recipe-card.zoomed {
+            transform: scale(1.1); /* Reduced zoom scale to fit within screen */
+            z-index: 10;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.1); /* Ensures the card is centered */
+            width: 80%; /* Adjust the width to make it fit properly */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            text-align: left; /* Align text left when zoomed */
+            max-width: 500px; /* Limit max width of zoomed card */
+        }
+
+        /* Filter Buttons - Removed as per your request */
+        .filter-buttons {
             display: none;
         }
-        body.dark-mode header img.dark-mode-logo {
-            display: block;
+
+        h2 {
+            text-align: center;
+            width: 100%;
+            margin-bottom: 20px;
         }
-        body.dark-mode header img.light-mode-logo {
-            display: none;
-        }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>is DS the Recipe?</h1>
-        <!-- Light mode logo -->
-        <img class="light-mode-logo" src="https://i.ibb.co/XDG5ST7/IS-DS-THE-RECIPE.png" alt="IS DS The Recipe Logo">
-        <!-- Dark mode logo -->
-        <img class="dark-mode-logo" src="https://i.ibb.co/HH3r1Pb/IS-DS-THE-RECIPE-2.png" alt="IS DS The Recipe Logo">
-    </header>
+    <div class="web-frame">
+        <header>
+            <h1>is DS the Recipe?</h1>
+            <!-- Light mode logo -->
+            <img class="light-mode-logo" src="https://i.ibb.co/XDG5ST7/IS-DS-THE-RECIPE.png" alt="IS DS The Recipe Logo">
+            <!-- Dark mode logo -->
+            <img class="dark-mode-logo" src="https://i.ibb.co/HH3r1Pb/IS-DS-THE-RECIPE-2.png" alt="IS DS The Recipe Logo">
+        </header>
 
-    <div class="search-box">
-        <form method="POST">
-            <input type="text" name="ingredients" placeholder="Enter ingredients separated by commas" value="{{ user_input }}" required>
-            <button type="submit" id="find-recipes-btn">Find Recipes</button>
-        </form>
-        <button id="dark-mode-toggle">🌙 Toggle Dark Mode</button>
-    </div>
+        <div class="search-box">
+            <form method="POST">
+                <input type="text" name="ingredients" placeholder="Enter ingredients separated by commas" value="{{ user_input }}" required>
+                <button type="submit" id="find-recipes-btn">Find Recipes</button>
+            </form>
+            <button id="dark-mode-toggle">🌙 Toggle Dark Mode</button>
+        </div>
 
-    <div class="container">
-        {% if recipes %}
+        <div class="container">
             <h2>Recommended Recipes:</h2>
-            {% for recipe in recipes %}
-                <div class="recipe-card">
-                    <img src="{{ recipe['image'] }}" alt="Recipe Image">
-                    <div class="recipe-title">{{ recipe['title'] }}</div>
-                    <div class="recipe-details">
-                        <div><strong>Ingredients:</strong> {{ recipe['ingredients'] }}</div>
-                        <div><strong>Dietary Info:</strong> {{ recipe['dietary_info'] }}</div>
-                        <div><strong>Ingredient Level:</strong> {{ recipe['ingredient_level'] }}</div>
-                        <div><strong>Dietary Info Level:</strong> {{ recipe['dietary_info_level'] }}</div>
-                    </div>
-                    <div class="recipe-distance">
-                        Distance: {{ recipe['distance'] }}
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>No recipes found. Try entering some ingredients!</p>
-        {% endif %}
+            <div class="recipe-cards-container">
+                {% if recipes %}
+                    {% for recipe in recipes %}
+                        <div class="recipe-card">
+                            <img src="{{ recipe['image'] }}" alt="Recipe Image">
+                            <div class="recipe-title">{{ recipe['title'] }}</div>
+                            <div class="recipe-distance">
+                                Distance: {{ recipe['distance'] }}
+                            </div>
+                            <div class="recipe-cuisine">
+                                Cuisine: {{ recipe['cuisine'] }}
+                            </div>
+                            <div class="recipe-details">
+                                <div><strong>Ingredients:</strong> {{ recipe['ingredients'] }}</div>
+                                <div><strong>Dietary Info:</strong> {{ recipe['dietary_info'] }}</div>
+                                <div><strong>Ingredient Level:</strong> {{ recipe['ingredient_level'] }}</div>
+                                <div><strong>Dietary Info Level:</strong> {{ recipe['dietary_info_level'] }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No recipes found. Try entering some ingredients!</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 
     <script>
-        // Button color change on click
-        document.getElementById("find-recipes-btn").addEventListener("click", function () {
-            this.classList.toggle("clicked");
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        darkModeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.toggle('light-mode');
         });
 
-        // Toggle Dark Mode
-        document.getElementById("dark-mode-toggle").addEventListener("click", function () {
-            document.body.classList.toggle("dark-mode");
+        // Recipe card zoom functionality
+        const recipeCards = document.querySelectorAll('.recipe-card');
+
+        recipeCards.forEach(card => {
+            card.addEventListener('click', function () {
+                this.classList.toggle('zoomed');
+                const details = this.querySelector('.recipe-details');
+                if (this.classList.contains('zoomed')) {
+                    details.style.display = 'block'; // Show details on zoom
+                } else {
+                    details.style.display = 'none'; // Hide details when not zoomed
+                }
+            });
         });
     </script>
 
